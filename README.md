@@ -73,3 +73,5 @@ Podemos mejorar la precisión conectando un reloj de tiempo real a Arduino (RTC)
 ### [Más instrucciones para PlotClock](http://www.thingiverse.com/thing:931498)
 
 ### [Mejora de PlotClock](http://www.thingiverse.com/thing:346784)
+
+![licencia](./images/Licencia_CC.png)
