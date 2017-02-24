@@ -24,6 +24,8 @@ El montaje de las piezas es sencillo
 
 Utilizando tornillos (de 10mm de largo) y tuercas de métrica M3.
 
+Su naturaleza abierta ha permitido que se realicen [muchas variantes](http://www.thingiverse.com/thing:248009/#remixes) y mejoras.
+
 ## Componentes
 
 * Piezas impresas o cortadas con láser
@@ -35,9 +37,35 @@ Utilizando tornillos (de 10mm de largo) y tuercas de métrica M3.
 
 ## Programación
 
+Para su programación basta con descargar el [código del autor](http://www.thingiverse.com/download:1697346) e instalarlo en nuestra placa arduino
+
+![montaje](https://i1.wp.com/www.geekmomprojects.com/wp-content/uploads/2014/12/plotclock_electronics-e1419920478217.jpg)
+
+Para calibrarlo debemos medir lo más exactamente posible que los servos se desplazan 90º alrededor del eje vertical
+
+Una vez calibrado comentamos la línea
+
+    #define CALIBRATION      // enable calibration mode
+
+dejándola así
+
+
+    // #define CALIBRATION      // enable calibration mode
+
+Podemos mejorar la precisión conectando un reloj de tiempo real a Arduino (RTC) y activando la opción en el código
+
+
+    #define REALTIMECLOCK    // enable real time clock
 
 ## Referencias para el montaje
 
+### [Building PlotClock](http://www.geekmomprojects.com/building-plotclock/)
+
+### [STLs](http://www.thingiverse.com/thing:250204/#files)
+
+### [Montaje detallado ](http://linksprite.com/wiki/index.php5?title=Plotclock_DIY_Robot_with_Arduino_Uno_Drawing_Robot)
+
+### [Extensión del área de dibujo](http://techiemalc.blogspot.com.es/2015/11/simulation-of-plot-clock-for.html)
 
 
 ### [PlotClock for Dummies](https://www.instructables.com/id/Plot-Clock-for-dummies/)
@@ -45,9 +73,3 @@ Utilizando tornillos (de 10mm de largo) y tuercas de métrica M3.
 ### [Más instrucciones para PlotClock](http://www.thingiverse.com/thing:931498)
 
 ### [Mejora de PlotClock](http://www.thingiverse.com/thing:346784)
-
-### [Building PlotClock](http://www.geekmomprojects.com/building-plotclock/)
-
-### [STLs](http://www.thingiverse.com/thing:250204/#files)
-
-### [Montaje detallado ](http://linksprite.com/wiki/index.php5?title=Plotclock_DIY_Robot_with_Arduino_Uno_Drawing_Robot)
