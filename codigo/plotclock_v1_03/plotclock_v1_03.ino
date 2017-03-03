@@ -206,7 +206,7 @@ void loop()
 //    number(34, 25, i, 0.9);
     number(34+OFFSET_X, 25+OFFSET_Y, minute()/10, 0.9);
    // number(48, 25, (minute()-i*10), 0.9);
-    number(49+OFFSET_X, 26+OFFSET_Y, minute()%10, 0.9);
+    number(48+OFFSET_X, 26+OFFSET_Y, minute()%10, 0.9);
     lift(LIFT_SWEEPER);
     
     drawTo(ERASER_X , ERASER_Y);
