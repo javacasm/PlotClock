@@ -96,10 +96,12 @@ volatile double lastY = 47.5;
 
 int last_min = 0;
 
+#define EXTERNAL_SWITCH 13
+
 void setup() 
 { 
   
-  //pinMode(7, INPUT_PULLUP);
+  pinMode(EXTERNAL_SWITCH, INPUT_PULLUP);
   Serial.begin(9600);
 #ifdef REALTIMECLOCK
 
@@ -165,6 +167,13 @@ void loop()
 #else 
 
 
+  if(digitalRead(EXTERNAL_SWITCH)==LOW)
+  {
+    Serial.println("Sleeeeeeping");
+    delay(500);
+    return;
+  }
+
   int i = 0;
   if (last_min != minute()) {
 
@@ -197,7 +206,7 @@ void loop()
 //    number(34, 25, i, 0.9);
     number(34+OFFSET_X, 25+OFFSET_Y, minute()/10, 0.9);
    // number(48, 25, (minute()-i*10), 0.9);
-    number(48+OFFSET_X, 26+OFFSET_Y, minute()%10, 0.9);
+    number(49+OFFSET_X, 26+OFFSET_Y, minute()%10, 0.9);
     lift(LIFT_SWEEPER);
     
     drawTo(ERASER_X , ERASER_Y);
