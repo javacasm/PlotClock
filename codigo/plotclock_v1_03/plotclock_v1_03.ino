@@ -21,7 +21,7 @@
 
 // delete or mark the next line as comment if you don't need these
 //#define CALIBRATION      // enable calibration mode
-//#define REALTIMECLOCK    // enable real time clock
+#define REALTIMECLOCK    // enable real time clock
 
 #define WISHY 3 // Offset of the Y coordinats of the plate-wisher
 
@@ -40,17 +40,24 @@
 #define SERVOPINLEFT  5
 #define SERVOPINRIGHT 6
 
-#define ZOFF 120
+#define ZOFF 190
 // lift positions of lifting servo
 
+#define OFFSET_X -5
+#define OFFSET_Y 0
+// Move the base position
 #define LIFT_DRAW     0
 #define LIFT_NODRAW   1
 #define LIFT_SWEEPER  2
 
 
 #define LIFT0_HEIGHT 1110+ZOFF // on drawing surface
-#define LIFT1_HEIGHT 995+ZOFF  // between numbers
-#define LIFT2_HEIGHT 735+ZOFF  // going towards sweeper
+#define LIFT1_HEIGHT 950+ZOFF  // between numbers
+#define LIFT2_HEIGHT 550+ZOFF  // going towards sweeper
+
+#define ERASER_X 69.0
+#define ERASER_Y 49.0
+
 
 // speed of liftimg arm, higher is slower
 #define LIFTSPEED 2000
@@ -167,26 +174,34 @@ void loop()
 
     lift(LIFT_DRAW);
 
-    hour();
+  /*  hour();
     while ((i+1)*10 <= hour())
     {
       i++;
-    }
+    }*/
 
-    number(3, 3, 111, 1);
-    number(5, 25, i, 0.9);
-    number(19, 25, (hour()-i*10), 0.9);
-    number(28, 25, 11, 0.9);
-
-    i=0;
-    while ((i+1)*10 <= minute())
-    {
-      i++;
-    }
-    number(34, 25, i, 0.9);
-    number(48, 25, (minute()-i*10), 0.9);
+    
+    number(3+OFFSET_X, 3+OFFSET_Y, 111, 1);
+    //number(5+OFFSET_X, 25+OFFSET_Y, i, 0.9);
+    number(5+OFFSET_X, 25+OFFSET_Y, hour()/10, 0.9);
+    //number(19+OFFSET_X, 25+OFFSET_Y, (hour()-i*10), 0.9);
+    number(19+OFFSET_X, 25+OFFSET_Y, hour()%10, 0.9);
+    // Central Two points
+    number(28+OFFSET_X, 25+OFFSET_Y, 11, 0.9);
+//
+//    i=0;
+//    while ((i+1)*10 <= minute())
+//    {
+//      i++;
+//    }
+//    number(34, 25, i, 0.9);
+    number(34+OFFSET_X, 25+OFFSET_Y, minute()/10, 0.9);
+   // number(48, 25, (minute()-i*10), 0.9);
+    number(48+OFFSET_X, 26+OFFSET_Y, minute()%10, 0.9);
     lift(LIFT_SWEEPER);
-    drawTo(71.0, 47.2);
+    
+    drawTo(ERASER_X , ERASER_Y);
+    
     lift(LIFT_NODRAW);
     last_min = minute();
     delay(580);
@@ -287,10 +302,18 @@ void number(float bx, float by, int num, float scale) {
   // Borrado
   case 111:
     Serial.println("Borrado");
-    Serial.println("Borrando manual!!!");
+
 
     lift(LIFT_DRAW);
+  
     drawTo(70, 45);
+// ThoughtFULL ERASE
+    for(int i=46;i>26;i=i-3)
+    {
+      drawTo(65-WISHY, i);
+      drawTo(-3, i+1);
+    }
+    /*
     drawTo(65-WISHY, 43);
 
     drawTo(65-WISHY, 46);
@@ -310,11 +333,12 @@ void number(float bx, float by, int num, float scale) {
     drawTo(65-WISHY, 26);
 
     drawTo(5, 26);
+    */
     drawTo(60-WISHY, 40);
 
     drawTo(73.2, 44.0);
     lift(LIFT_SWEEPER);
-    delay(2000);    
+    delay(500);    
     break;
   //
   case 11:
@@ -342,7 +366,7 @@ void lift(char lift) {
     // room to optimize  !
 
   case LIFT_DRAW: //850
-
+      Serial.println("LIFT_DRAW");
       if (servoLift >= LIFT0_HEIGHT) {
       while (servoLift >= LIFT0_HEIGHT) 
       {
@@ -364,7 +388,7 @@ void lift(char lift) {
     break;
 
   case LIFT_NODRAW: //150
-
+     Serial.println("LIFT_NODRAW");
     if (servoLift >= LIFT1_HEIGHT) {
       while (servoLift >= LIFT1_HEIGHT) {
         servoLift--;
@@ -385,7 +409,7 @@ void lift(char lift) {
     break;
 
   case LIFT_SWEEPER:
-
+    Serial.println("LIFT_SWEEPER"); 
     if (servoLift >= LIFT2_HEIGHT) {
       while (servoLift >= LIFT2_HEIGHT) {
         servoLift--;
@@ -435,7 +459,7 @@ void bogenGZS(float bx, float by, float radius, int start, int ende, float sqee)
 
 void drawTo(double pX, double pY) {
   double dx, dy, c;
-  Serial.println(String("Draw:")+pX+String(",")+pY+String(")"));
+  //Serial.println(String("Draw:")+pX+String(",")+pY+String(")"));
   int i;
 
   // dx dy of new point
