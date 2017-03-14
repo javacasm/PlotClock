@@ -74,6 +74,13 @@ Podemos mejorar la precisión conectando un reloj de tiempo real a Arduino (RTC)
 
 ### [Mejora de PlotClock](http://www.thingiverse.com/thing:346784)
 
+### [Diseño más robusto](http://www.thingiverse.com/thing:371248) ([una pequeña modificación](http://www.thingiverse.com/thing:940737))
+
+### [Sensor pir para que sólo dibuje si hay alguien](https://www.thingiverse.com/thing:386449)
+
+![Diseño más robusto](http://www.thingiverse.com/thing:371248)
+
 ### [Vídeo explicación](https://youtu.be/2DZSj8b2RGw)
+
 
 ![licencia](./images/Licencia_CC.png)
