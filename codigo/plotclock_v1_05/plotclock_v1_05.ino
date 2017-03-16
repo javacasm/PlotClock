@@ -15,7 +15,7 @@
 //       - see http://www.pjrc.com/teensy/td_libs_DS1307RTC.html for how to hook up the real time clock 
 // 1.03  Fixed the length bug at the servo2 angle calculation, other fixups
 // 1.04  Add constant, separate files
-// 1.05  Add DS1302,lcd I2c and OneWire temperature sensor
+// 1.05  Add DS1302,lcd I2c, PIR for only light with people and OneWire temperature sensor
 
 #define LCD_I2C
 #define TEMP_DS18x20
@@ -32,6 +32,8 @@
 #include <DallasTemperature.h>
 
 #define ONE_WIRE_BUS 11
+
+// Use a 4.7k resistor between Vcc and Data https://arduino-info.wikispaces.com/file/view/DS18B20-Wiring.jpg/543661142/DS18B20-Wiring.jpg
 
 // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
 OneWire oneWire(ONE_WIRE_BUS);
