@@ -3,6 +3,9 @@
 
 #include "config.h"
 
+#define ERASE_COD 111
+#define TWO_POINTS_COD 11
+
 Servo servoLift; 
 Servo servoLeft; 
 Servo servoRight;
@@ -13,8 +16,24 @@ volatile double lastY = 47.5;
 
 int servoLiftPos = 1500;
 
+String getFormatedNumber(int i)
+{
+  String sResultado=String(i);
+  if (i<10)
+    sResultado=String("0")+sResultado;
+
+   return sResultado;
+}
+
+void debug(String text)
+{
+  Serial.println(text);
+}
+
+
 void attachServos()
 {
+    debug("Attach Servos");
     if (!servoLift.attached()) servoLift.attach(SERVOPINLIFT);
     if (!servoLeft.attached()) servoLeft.attach(SERVOPINLEFT);
     if (!servoRight.attached()) servoRight.attach(SERVOPINRIGHT);
@@ -23,6 +42,7 @@ void attachServos()
 
 void    detachServos()
 {
+    debug("Detach Servos");
     servoLift.detach();
     servoLeft.detach();
     servoRight.detach();
@@ -95,13 +115,13 @@ void drawTo(double pX, double pY) {
 
 
 void lift(char lift) {
-  Serial.println(String("lift to")+(int)(lift));
+  debug(String("lift to:")+(int)(lift));
   
   switch (lift) {
     // room to optimize  !
 
   case LIFT_DRAW: //850
-      Serial.println("LIFT_DRAW");
+      debug("LIFT_DRAW");
       if (servoLiftPos >= LIFT0_HEIGHT) {
       while (servoLiftPos >= LIFT0_HEIGHT) 
       {
@@ -123,7 +143,7 @@ void lift(char lift) {
     break;
 
   case LIFT_NODRAW: //150
-     Serial.println("LIFT_NODRAW");
+     debug("LIFT_NODRAW");
     if (servoLiftPos >= LIFT1_HEIGHT) {
       while (servoLiftPos >= LIFT1_HEIGHT) {
         servoLiftPos--;
@@ -144,7 +164,7 @@ void lift(char lift) {
     break;
 
   case LIFT_SWEEPER:
-    Serial.println("LIFT_SWEEPER"); 
+    debug("LIFT_SWEEPER"); 
     if (servoLiftPos >= LIFT2_HEIGHT) {
       while (servoLiftPos >= LIFT2_HEIGHT) {
         servoLiftPos--;
@@ -165,7 +185,7 @@ void lift(char lift) {
 
 
 void bogenUZS(float bx, float by, float radius, int start, int ende, float sqee) {
-Serial.println("bogenUZS");
+  debug("bogenUZS");
   float inkr = -0.05;
   float count = 0;
 
@@ -179,7 +199,7 @@ Serial.println("bogenUZS");
 }
 
 void bogenGZS(float bx, float by, float radius, int start, int ende, float sqee) {
-  Serial.println("bogenGZS");
+  debug("bogenGZS");
   float inkr = 0.05;
   float count = 0;
 
@@ -196,7 +216,7 @@ void bogenGZS(float bx, float by, float radius, int start, int ende, float sqee)
 // The structure follows this principle: move to first startpoint of the numeral, lift down, draw numeral, lift up
 void number(float bx, float by, int num, float scale) {
   if(num<10)
-    Serial.println(String(num)+"("+String(bx)+","+String(by)+") / "+String(scale));
+    debug(String(num)+"("+String(bx)+","+String(by)+") / "+String(scale));
   
   switch (num) {
 
@@ -276,8 +296,8 @@ void number(float bx, float by, int num, float scale) {
     break;
 
   // Borrado
-  case 111:
-    Serial.println("Borrado");
+  case ERASE_COD:
+    debug("ERASING");
 
 
     lift(LIFT_DRAW);
@@ -295,9 +315,10 @@ void number(float bx, float by, int num, float scale) {
     drawTo(73.2, 44.0);
     lift(LIFT_SWEEPER);
     delay(500);    
+    debug("ERASED!!");
     break;
   // Central Two points
-  case 11:
+  case TWO_POINTS_COD:
 
     drawTo(bx + 5 * scale, by + 15 * scale);
     lift(LIFT_DRAW);

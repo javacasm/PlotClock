@@ -2,6 +2,9 @@
 #ifndef _CONTROL_H_
 #define _CONTROL_H_
 
+
+void debug(String text);
+String getFormatedNumber(int i);
 void attachServos();
 void detachServos();
 void set_XY(double Tx, double Ty) ;
