@@ -56,7 +56,7 @@
 #define LIFT2_HEIGHT 550+ZOFF  // going towards sweeper
 
 #define ERASER_X 69.0
-#define ERASER_Y 49.0
+#define ERASER_Y 45.0
 
 
 // speed of liftimg arm, higher is slower
