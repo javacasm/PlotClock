@@ -1,3 +1,6 @@
+#include <TimeLib.h>
+#include <Time.h>
+
 // Plotclock
 // cc - by Johannes Heberlein 2014
 // v 1.02
@@ -17,11 +20,11 @@
 // 1.04  Add constant, separate files
 // 1.05  Add DS1302,lcd I2c and OneWire temperature sensor
 
-#define LCD_I2C
-#define TEMP_DS18x20
-#define REALTIMECLOCK_DS1302    // enable real time clock DS1302
-//#define REALTIMECLOCK_DS1307    // enable real time clock DS1307
-#define PIR_SENSOR_PIN 2
+//#define LCD_I2C
+//#define TEMP_DS18x20
+//#define REALTIMECLOCK_DS1302    // enable real time clock DS1302
+#define REALTIMECLOCK_DS1307    // enable real time clock DS1307
+//#define PIR_SENSOR_PIN 2
 // delete or mark the next line as comment if you don't need these
 //#define CALIBRATION      // enable calibration mode
 
