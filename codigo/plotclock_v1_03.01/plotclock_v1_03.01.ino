@@ -14,7 +14,7 @@
 //       - added code to support DS1307, DS1337 and DS3231 real time clock chips
 //       - see http://www.pjrc.com/teensy/td_libs_DS1307RTC.html for how to hook up the real time clock 
 // 1.03  Fixed the length bug at the servo2 angle calculation, other fixups
-
+// 1.03.1 Added setTime using serial data
 
 #include <Time.h> // see http://playground.arduino.cc/Code/time 
 #include <Servo.h>
@@ -40,11 +40,11 @@
 #define SERVOPINLEFT  5
 #define SERVOPINRIGHT 6
 
-#define ZOFF 190
+#define ZOFF 180
 // lift positions of lifting servo
 
-#define OFFSET_X -5
-#define OFFSET_Y 0
+#define OFFSET_X -7
+#define OFFSET_Y 3
 // Move the base position
 #define LIFT_DRAW     0
 #define LIFT_NODRAW   1
@@ -53,18 +53,22 @@
 
 #define LIFT0_HEIGHT 1110+ZOFF // on drawing surface
 #define LIFT1_HEIGHT 950+ZOFF  // between numbers
-#define LIFT2_HEIGHT 550+ZOFF  // going towards sweeper
+#define LIFT2_HEIGHT 500+ZOFF  // going towards sweeper
 
-#define ERASER_X 69.0
-#define ERASER_Y 45.0
+//#define ERASER_X 69.0
+#define ERASER_X 63.0
+#define ERASER_Y 48.0
 
 
 // speed of liftimg arm, higher is slower
 #define LIFTSPEED 2000
 
 // length of arms
+//#define L1 35
 #define L1 35
+//#define L2 55.1
 #define L2 55.1
+//#define L3 13.2
 #define L3 13.2
 #define L4 45
 
