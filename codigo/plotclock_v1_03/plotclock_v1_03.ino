@@ -129,10 +129,12 @@ void setup()
 
 
     setTime(13,25,0,0,0,0);
+    Serial.println("Introduzca la fecha en formato YYYY/MM/dd HH:mm:ss");
   }
 #else  
   // Set current time only the first to values, hh,mm are needed
   setTime(14,19,0,0,0,0);
+  Serial.println("Introduzca la fecha en formato YYYY/MM/dd HH:mm:ss");
 #endif
 
 
@@ -144,7 +146,7 @@ void setup()
   //servo2.attach(SERVOPINLEFT);  //  left servo
   //servo3.attach(SERVOPINRIGHT);  //  right servo
   delay(1000);
-
+  Serial.println("Introduzca la fecha en formato YYYY/MM/dd HH:mm:ss");
 } 
 
 void loop() 
@@ -166,6 +168,11 @@ void loop()
 
 #else 
 
+  if (Serial.available() >= 12){
+    setTime();
+  }
+
+
 
   if(digitalRead(EXTERNAL_SWITCH)==LOW)
   {
@@ -174,9 +181,12 @@ void loop()
     return;
   }
 
+  
   int i = 0;
   if (last_min != minute()) {
-
+    
+    Serial.println(String(year())+"/"+String(month())+"/"+String(day())+" "+String(hour())+":"+String(minute())+":"+String(second()));
+    
     if (!servo1.attached()) servo1.attach(SERVOPINLIFT);
     if (!servo2.attached()) servo2.attach(SERVOPINLEFT);
     if (!servo3.attached()) servo3.attach(SERVOPINRIGHT);
@@ -533,3 +543,43 @@ void set_XY(double Tx, double Ty)
 
 
 
+void setTime(){
+
+
+    tmElements_t tm;
+    time_t t;
+    //note that the tmElements_t Year member is an offset from 1970,
+    //but the RTC wants the last two digits of the calendar year.
+    //use the convenience macros from Time.h to do the conversions.
+    int y = Serial.parseInt();
+    if (y >= 100 && y < 1000) {
+        Serial.println(F("Error: Year must be two digits or four digits!"));
+    } else {
+        if (y >= 1000) {
+            tm.Year = CalendarYrToTm(y);
+        } else {    //(y < 100)
+            tm.Year = y2kYearToTm(y);
+        }
+        tm.Month = Serial.parseInt();
+        tm.Day = Serial.parseInt();
+        tm.Hour = Serial.parseInt();
+        tm.Minute = Serial.parseInt();
+        tm.Second = Serial.parseInt();
+        t = makeTime(tm);
+  //use the time_t value to ensure correct weekday is set
+        if(RTC.set(t) == 0) { // Success
+          setTime(t);
+          Serial.println(F("RTC set!"));
+        } else  {
+          
+          Serial.println(F("RTC not set!"));
+        }
+        //dump any extraneous input
+        while (Serial.available() > 0) {
+          Serial.read();
+        }
+
+    }
+
+
+}
